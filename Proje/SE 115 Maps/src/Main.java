@@ -1,23 +1,23 @@
-import java.util.Scanner;
 import java.io.*;
+import java.util.Scanner;
 
 public class Main{
     public static void main(String[] args) throws IOException{
         Scanner sc = new Scanner(System.in);
-        String filePath = sc.nextLine();
+        System.out.print("Write file's name if it's in the project's file, if not write absolute path: ");
+        String input = sc.nextLine();
 
-        String input = """
-                3
-                X Y Z
-                3
-                X Y 6
-                X Z 10   //Temporary example!!
-                Y Z 2
-                X Z""";
-        CountryMap map = CountryMap.fromInput(input);
-        RouteResult result = WayFinder.findShortestRoute(map);
+        CountryMap map = CountryMap.inputReader(input);
+        if (map != null) {
+            System.out.println("Reading process completed successfully..!\n--------------------");
+        } else {
+            System.err.println("Reading process failed unfortunately..!");
+        }
 
-        System.out.println("Shortest Way:");
+        Routes result = WayFinder.findShortestRoute(map);
+
+
+        System.out.println("Fastest Way:");
         String final_result ="";
         for (City country : result.route) {
             if (country != null) {

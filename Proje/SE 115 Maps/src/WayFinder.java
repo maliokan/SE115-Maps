@@ -1,6 +1,6 @@
 public class WayFinder {
-    public static RouteResult findShortestRoute(CountryMap map) {
-        int countryCount = map.countryCount;
+    public static Routes findShortestRoute(CountryMap map) {
+        int countryCount = map.cityCount;
         boolean[] visited = new boolean[countryCount];
         int[] minTimes = new int[countryCount];
         int[] previousCountry = new int[countryCount];
@@ -11,8 +11,8 @@ public class WayFinder {
             previousCountry[i] = -1;
         }
 
-        int start = map.startCountry;
-        int end = map.endCountry;
+        int start = map.startCity;
+        int end = map.endCity;
         minTimes[start] = 0;
 
         for (int count = 0; count < countryCount - 1; count++) {
@@ -56,15 +56,15 @@ public class WayFinder {
             finalPath[i] = path[pathLength - 1 - i];
         }
 
-        return new RouteResult(finalPath, minTimes[end]);
+        return new Routes(finalPath, minTimes[end]);
     }
 }
 
-class RouteResult {
-    City[] route;
-    int totalTime;
+class Routes {
+    public City[] route;
+    public int totalTime;
 
-    public RouteResult(City[] route, int totalTime) {
+    public Routes(City[] route, int totalTime) {
         this.route = route;
         this.totalTime = totalTime;
     }
