@@ -1,53 +1,52 @@
 public class WayFinder {
     public static Routes findShortestRoute(CountryMap map) {
-        int countryCount = map.cityCount;
-        boolean[] visited = new boolean[countryCount];
-        int[] minTimes = new int[countryCount];
-        int[] previousCountry = new int[countryCount];
+        int cityCount = map.cityCount;
+        boolean[] visited = new boolean[cityCount];
+        int[] minTimes = new int[cityCount];
+        int[] previousCity = new int[cityCount];
 
-        // Tüm süreler başlangıçta sonsuz
-        for (int i = 0; i < countryCount; i++) {
+
+        for (int i = 0; i < cityCount; i++) {    //assign starting time values as maximum in all routes
             minTimes[i] = Integer.MAX_VALUE;
-            previousCountry[i] = -1;
+            previousCity[i] = -1;
         }
 
         int start = map.startCity;
         int end = map.endCity;
-        minTimes[start] = 0;
+        minTimes[start] = 0;        //Starting point will start from 0
 
-        for (int count = 0; count < countryCount - 1; count++) {
-            // En düşük süreli ülkeyi bul
+        for (int i=0; i<cityCount-1 ;i++) {
             int currentCountry = -1;
-            int minTime = Integer.MAX_VALUE;
-            for (int i = 0; i < countryCount; i++) {
-                if (!visited[i] && minTimes[i] < minTime) {
-                    currentCountry = i;
-                    minTime = minTimes[i];
+            int minimumTime = Integer.MAX_VALUE;        //find minimum time city
+            for (int j=0; j<cityCount ;j++) {
+                if (!(visited[j]) && (minTimes[j] < minimumTime)) {
+                    currentCountry = j;
+                    minimumTime = minTimes[j];
                 }
             }
 
             if (currentCountry == -1) break;
             visited[currentCountry] = true;
 
-            // Komşu ülkelerin sürelerini güncelle
-            for (int i = 0; i < countryCount; i++) {
-                if (!visited[i] && map.travelTimes[currentCountry][i] > 0) {
-                    int newTime = minTimes[currentCountry] + map.travelTimes[currentCountry][i];
-                    if (newTime < minTimes[i]) {
-                        minTimes[i] = newTime;
-                        previousCountry[i] = currentCountry;
+            //süreleri güncelle
+            for (int k=0; k<cityCount ;k++) {
+                if (!visited[k] && map.travelTimes[currentCountry][k] > 0) {
+                    int newTime = minTimes[currentCountry] + map.travelTimes[currentCountry][k];
+                    if (newTime < minTimes[k]) {
+                        minTimes[k] = newTime;
+                        previousCity[k] = currentCountry;
                     }
                 }
             }
         }
 
         // Rotayı geri inşa et
-        City[] path = new City[countryCount];
+        City[] path = new City[cityCount];
         int pathLength = 0;
         int current = end;
         while (current != -1) {
-            path[pathLength++] = map.countries[current];
-            current = previousCountry[current];
+            path[pathLength++] = map.cities[current];
+            current = previousCity[current];
         }
 
         // Yolu tersine çevir
