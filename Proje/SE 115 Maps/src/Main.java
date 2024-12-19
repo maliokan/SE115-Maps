@@ -1,15 +1,13 @@
 import java.io.*;
-import java.util.Scanner;
+import java.io.FileWriter;
 
 public class Main{
     public static void main(String[] args) throws IOException{
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Write file's name if it's in the project's file, if not write absolute path: ");
-        String input = sc.nextLine();
+        String input = args[0];
 
         CountryMap map = CountryMap.inputReader(input);
         if (map != null) {
-            System.out.println("Reading process completed successfully..!\n--------------------");
+            System.out.println("--------------------\nReading process completed successfully..!\n--------------------");
         } else {
             System.err.println("Reading process failed unfortunately..!");
         }
@@ -24,8 +22,26 @@ public class Main{
                 final_result += country.name + " -> ";
             }
         }
-        System.out.println(final_result.substring(0,final_result.length()-4));
+        String final_result_substring = final_result.substring(0, final_result.length() - 4);
+        System.out.println(final_result_substring);
         System.out.println("Total Time: " + result.totalTime + " minutes");
+
+
+
+        FileWriter fw = null;
+        try{
+            fw = new FileWriter("output.txt",false);
+            fw.write("Fastest Way: \n"+final_result_substring+"\n"+"Total Time: "+result.totalTime+" minutes");
+            System.out.println("--------------------\noutput.txt file has been created into 'src' folder.");
+            System.out.println("File writing process completed successfully..!\n--------------------");
+        }catch(Exception e){
+            System.err.println("Something went wrong when writing the result to a file.");
+        }finally {
+            if (fw != null){
+                fw.close();
+            }
+        }
     }
+
 }
 

@@ -1,0 +1,3 @@
+Fastest Way: 
+L -> M -> N -> O -> P -> R
+Total Time: 870 minutes
