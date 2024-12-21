@@ -103,13 +103,19 @@ public class CountryMap {
                 throw e;
             }
 
+            try {
+                String[] startEnd = new String[2];
+                String[] temporary = reader.nextLine().split(" ");
+                System.arraycopy(temporary, 0, startEnd, 0, temporary.length);
+                countryMAP.startCity = findCityIndex(countryMAP.cities, startEnd[0]);
+                countryMAP.endCity = findCityIndex(countryMAP.cities, startEnd[1]);
+                System.out.println("Starting city: " + startEnd[0] + "\nEnding city: " + startEnd[1]);
+                return countryMAP;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.err.println("More/less city thn expected in line: "+(i+1));
+                throw e;
+            }
 
-            String[] startEnd = reader.nextLine().split(" ");
-            countryMAP.startCity = findCityIndex(countryMAP.cities, startEnd[0]);
-            countryMAP.endCity = findCityIndex(countryMAP.cities, startEnd[1]);
-            System.out.println("Starting city: "+startEnd[0]+"\nEnding city: "+startEnd[1]);
-
-            return countryMAP;
         } catch (Exception e) {
             return null;
         } finally {

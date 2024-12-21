@@ -32,7 +32,7 @@ public class Main{
         try{
             fw = new FileWriter("output.txt",false);
             fw.write("Fastest Way: \n"+final_result_substring+"\n"+"Total Time: "+result.totalTime+" minutes");
-            System.out.println("--------------------\noutput.txt file has been created into 'src' folder.");
+            System.out.println("--------------------\noutput.txt file has been created.");
             System.out.println("File writing process completed successfully..!\n--------------------");
         }catch(Exception e){
             System.err.println("Something went wrong when writing the result to a file.");
